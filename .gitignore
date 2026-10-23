@@ -1,0 +1,15 @@
+node_modules/
+dist/
+artifacts/
+*.log
+.tools/
+*.blend1
+
+__pycache__/
+
+# Local authoring originals; deploy only optimized public assets.
+reference_resources/
+assets/source/
+.env
+.env.*
+!.env.example

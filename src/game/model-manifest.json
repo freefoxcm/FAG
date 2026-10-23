@@ -1,0 +1,305 @@
+{
+  "qingluan": {
+    "scale": 0.75,
+    "radius": 1.1,
+    "muzzles": [
+      [
+        -0.42,
+        0.02,
+        -3.72
+      ],
+      [
+        0.42,
+        0.02,
+        -3.72
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.57,
+        -0.08,
+        4.65
+      ],
+      [
+        0.57,
+        -0.08,
+        4.65
+      ]
+    ],
+    "url": "/assets/models/qingluan.glb",
+    "highUrl": "/assets/models/qingluan-high.glb",
+    "highTriangles": 52824
+  },
+  "drone": {
+    "scale": 1,
+    "radius": 1.05,
+    "muzzles": [
+      [
+        0,
+        0.12,
+        -1.9
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.37400000000000005,
+        0,
+        2.0679999999999996
+      ],
+      [
+        0.37400000000000005,
+        0,
+        2.0679999999999996
+      ]
+    ],
+    "url": "/assets/models/drone.glb",
+    "highUrl": "/assets/models/drone-high.glb",
+    "highTriangles": 15556
+  },
+  "interceptor": {
+    "scale": 1,
+    "radius": 1.05,
+    "muzzles": [
+      [
+        0,
+        0.12,
+        -3.1
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.3128,
+        0,
+        2.9319999999999995
+      ],
+      [
+        0.3128,
+        0,
+        2.9319999999999995
+      ]
+    ],
+    "url": "/assets/models/interceptor.glb",
+    "highUrl": "/assets/models/interceptor-high.glb",
+    "highTriangles": 15556
+  },
+  "heavy": {
+    "scale": 1,
+    "radius": 2.4,
+    "muzzles": [
+      [
+        -2.15,
+        0.1,
+        -1.2
+      ],
+      [
+        2.15,
+        0.1,
+        -1.2
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.68,
+        0,
+        2.5
+      ],
+      [
+        0.68,
+        0,
+        2.5
+      ]
+    ],
+    "url": "/assets/models/heavy.glb",
+    "highUrl": "/assets/models/heavy-high.glb",
+    "highTriangles": 15988
+  },
+  "support": {
+    "scale": 1,
+    "radius": 1.6,
+    "muzzles": [
+      [
+        0,
+        0.12,
+        -2.05
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.40800000000000003,
+        0,
+        2.1759999999999997
+      ],
+      [
+        0.40800000000000003,
+        0,
+        2.1759999999999997
+      ]
+    ],
+    "url": "/assets/models/support.glb",
+    "highUrl": "/assets/models/support-high.glb",
+    "highTriangles": 16232
+  },
+  "boss": {
+    "scale": 1,
+    "radius": 6.2,
+    "muzzles": [
+      [
+        -5.25,
+        0.1,
+        -3.2399999999999998
+      ],
+      [
+        5.25,
+        0.1,
+        -3.2399999999999998
+      ]
+    ],
+    "exhausts": [
+      [
+        -1.292,
+        0,
+        5.56
+      ],
+      [
+        -3.792,
+        0,
+        5.56
+      ],
+      [
+        1.292,
+        0,
+        5.56
+      ],
+      [
+        3.792,
+        0,
+        5.56
+      ]
+    ],
+    "url": "/assets/models/boss.glb",
+    "highUrl": "/assets/models/boss-high.glb",
+    "highTriangles": 40424
+  },
+  "akari": {
+    "scale": 0.78,
+    "radius": 1.05,
+    "muzzles": [
+      [
+        -0.36,
+        -0.02,
+        -2.88
+      ],
+      [
+        0.36,
+        -0.02,
+        -2.88
+      ]
+    ],
+    "exhausts": [
+      [
+        0,
+        -0.025,
+        4.35
+      ]
+    ],
+    "engineCount": 1,
+    "tailCount": 1,
+    "url": "/assets/models/akari.glb",
+    "highUrl": "/assets/models/akari-high.glb",
+    "highTriangles": 56408
+  },
+  "haneul": {
+    "scale": 0.74,
+    "radius": 1.15,
+    "muzzles": [
+      [
+        -0.42,
+        0,
+        -3.38
+      ],
+      [
+        0.42,
+        0,
+        -3.38
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.57,
+        -0.08,
+        4.7
+      ],
+      [
+        0.57,
+        -0.08,
+        4.7
+      ]
+    ],
+    "engineCount": 2,
+    "tailCount": 2,
+    "url": "/assets/models/haneul.glb",
+    "highUrl": "/assets/models/haneul-high.glb",
+    "highTriangles": 54940
+  },
+  "astra": {
+    "scale": 0.82,
+    "radius": 1.1,
+    "muzzles": [
+      [
+        -0.4,
+        0.02,
+        -2.87
+      ],
+      [
+        0.4,
+        0.02,
+        -2.87
+      ]
+    ],
+    "exhausts": [
+      [
+        0,
+        -0.06,
+        3.9799999999999995
+      ]
+    ],
+    "engineCount": 1,
+    "tailCount": 2,
+    "url": "/assets/models/astra.glb",
+    "highUrl": "/assets/models/astra-high.glb",
+    "highTriangles": 52000
+  },
+  "snega": {
+    "scale": 0.69,
+    "radius": 1.2,
+    "muzzles": [
+      [
+        -0.48,
+        -0.02,
+        -3.45
+      ],
+      [
+        0.48,
+        -0.02,
+        -3.45
+      ]
+    ],
+    "exhausts": [
+      [
+        -0.92,
+        -0.12,
+        5.05
+      ],
+      [
+        0.92,
+        -0.12,
+        5.05
+      ]
+    ],
+    "engineCount": 2,
+    "tailCount": 2,
+    "url": "/assets/models/snega.glb",
+    "highUrl": "/assets/models/snega-high.glb",
+    "highTriangles": 83736
+  }
+}

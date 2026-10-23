@@ -1,0 +1,34 @@
+{
+  "name": "qingluan-rebirth",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5180",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "assets": "node scripts/build-assets.mjs",
+    "assets:roster": "node scripts/build-assets.mjs --roster",
+    "test": "tsx --test tests/*.test.ts",
+    "test:browser": "node scripts/playtest.mjs",
+    "test:upgrade": "node scripts/validate-upgrade.mjs",
+    "test:record": "node scripts/record-combat.mjs",
+    "test:hangar": "node scripts/playtest-hangar.mjs",
+    "test:pilots": "node scripts/playtest-pilots.mjs",
+    "assets:optimize": "node scripts/optimize-models.mjs"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "@types/three": "^0.180.0",
+    "playwright": "^1.56.1",
+    "sharp": "^0.35.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
+  }
+}
