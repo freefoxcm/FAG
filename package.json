@@ -18,7 +18,9 @@
     "test:record": "node scripts/record-combat.mjs",
     "test:hangar": "node scripts/playtest-hangar.mjs",
     "test:pilots": "node scripts/playtest-pilots.mjs",
-    "assets:optimize": "node scripts/optimize-models.mjs"
+    "assets:optimize": "node scripts/optimize-models.mjs",
+    "test:operations": "node scripts/playtest-operations.mjs",
+    "assets:story": "node scripts/capture-story.mjs"
   },
   "dependencies": {
     "three": "^0.180.0"

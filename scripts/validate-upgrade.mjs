@@ -1,3 +1,4 @@
+import {enterCombat} from './flow-helpers.mjs';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -12,7 +13,7 @@ try{
   gallery.push({id,...model});await page.screenshot({path:out+'/'+id+'-close.png'});
   if(id==='qingluan'){await page.getByRole('button',{name:'俯视',exact:true}).click();await page.screenshot({path:out+'/qingluan-top.png'});await page.getByRole('button',{name:'侧视',exact:true}).click();await page.screenshot({path:out+'/qingluan-side.png'});await page.getByRole('button',{name:'切换战场光照'}).click();await page.getByRole('button',{name:'近景',exact:true}).click();await page.screenshot({path:out+'/qingluan-field-light.png'});}
  }
- await page.goto('http://127.0.0.1:5180');await page.waitForFunction(()=>!!window.__GAME__);await page.locator('#start').click();await page.locator('#skip').click();
+ await page.goto('http://127.0.0.1:5180');await page.waitForFunction(()=>!!window.__GAME__);await enterCombat(page);
  await page.evaluate(()=>{const g=window.__GAME__;g.startGame();document.getElementById('stage-banner').hidden=true;g.sim.time=110;g.sim.spawn('drone',-17,-20,{timer:9});g.sim.spawn('interceptor',-6,-8,{timer:9});g.sim.spawn('heavy',7,-20,{timer:9});g.sim.spawn('support',17,-29,{timer:9});});await page.waitForTimeout(250);await page.evaluate(()=>window.__GAME__.sim.mode='paused');await page.screenshot({path:out+'/four-archetypes-1366.png'});await page.setViewportSize({width:1920,height:1080});await page.screenshot({path:out+'/four-archetypes-1920.png'});
  await page.evaluate(()=>{const g=window.__GAME__;g.startGame();g.sim.spawn('interceptor',0,-12,{hp:500,maxHp:500,timer:99});document.getElementById('stage-banner').hidden=true;});await page.waitForTimeout(300);const before=await page.evaluate(()=>window.__GAME__.sim.entities.find(e=>e.kind==='interceptor').hp);await page.keyboard.press('KeyE');await page.waitForTimeout(350);await page.screenshot({path:out+'/missile-metal-shell.png'});await page.waitForTimeout(550);const after=await page.evaluate(()=>window.__GAME__.sim.entities.find(e=>e.kind==='interceptor')?.hp??0);assert(before-after>=8);
  const performance=[];

@@ -1,8 +1,9 @@
+import {enterCombat} from './flow-helpers.mjs';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
 const pilot=process.env.PILOT||'qingluan',out=process.env.OUTPUT_DIR||'artifacts/upgrade';await mkdir(out,{recursive:true});const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
- const context=await browser.newContext({viewport:{width:1366,height:768},recordVideo:{dir:out,size:{width:1366,height:768}}}),page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:5180/?pilot='+pilot);await page.waitForFunction(()=>!!window.__GAME__);await page.locator('#start').click();await page.locator('#skip').click();await page.keyboard.down('KeyE');await page.keyboard.down('KeyQ');
+ const context=await browser.newContext({viewport:{width:1366,height:768},recordVideo:{dir:out,size:{width:1366,height:768}}}),page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:5180/?pilot='+pilot);await page.waitForFunction(()=>!!window.__GAME__);await enterCombat(page);await page.keyboard.down('KeyE');await page.keyboard.down('KeyQ');
  let held='',retries=0;const samples=[],start=Date.now();
  while(Date.now()-start<65000){
   const state=await page.evaluate(()=>{const g=window.__GAME__,s=g.sim;return {mode:s.mode,pilot:s.character.id,time:s.time,x:s.player.x,z:s.player.z,health:s.health,kills:s.kills,score:s.score,fps:g.fps,invincible:s.invincible,entities:s.entities.map(e=>({kind:e.kind,x:e.x,z:e.z,vx:e.vx,vz:e.vz,radius:e.radius,state:e.state}))};});

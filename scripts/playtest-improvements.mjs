@@ -1,3 +1,4 @@
+import {enterCombat} from './flow-helpers.mjs';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
@@ -7,7 +8,7 @@ try {
   const context=await browser.newContext({viewport:{width:1366,height:768},recordVideo:{dir:'artifacts/improvements',size:{width:1366,height:768}}});
   const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(process.env.GAME_URL||'http://127.0.0.1:5180');await page.waitForFunction(()=>!!window.__GAME__);
-  await page.locator('#start').click();await page.locator('#skip').click();
+  await enterCombat(page);
   const entry=await page.evaluate(()=>{const {sim:s,world:w}=window.__GAME__;window.__GAME__.startGame();s.invincible=999;w.syncView(s);for(let i=0;i<62;i++)s.update(1/60,{x:0,z:0,missile:false,ultimate:false});return {entryZ:s.entryZ,fireBoundary:s.fireBoundary,planes:s.entities.filter(e=>e.kind==='drone'||e.kind==='interceptor').map(e=>{const p=w.camera.position.clone().set(e.x,e.y-1,e.z+4).project(w.camera);return {id:e.id,ndcY:p.y,z:e.z};})};});
   console.log('Entry:',JSON.stringify(entry));assert.equal(entry.planes.length,3);assert(entry.planes.every(e=>e.ndcY>1));await page.screenshot({path:'artifacts/improvements/entry-outside.png'});await page.waitForTimeout(4200);await page.screenshot({path:'artifacts/improvements/entry-flying-in.png'});
   await page.evaluate(()=>{const g=window.__GAME__,s=g.sim;g.startGame();s.invincible=999;s.time=60;document.getElementById('stage-banner').hidden=true;s.spawn('turret',6.1,-5,{hp:500,maxHp:500,timer:0,vz:0});for(const [x,z]of [[-15,-18],[0,-25],[15,-22]])s.spawn('interceptor',x,z,{hp:500,maxHp:500,timer:10,vz:0});});
