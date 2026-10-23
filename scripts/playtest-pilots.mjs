@@ -7,7 +7,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1366,height:768}}),errors=[],runs=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
  // First full vertical slice: hangar selection -> intro -> flight -> loss/retry -> win.
- await page.goto(base+'/?hangar&model=akari');await page.waitForSelector('#hangar-loading[hidden]',{state:'attached'});await page.locator('#hangar-deploy').click();await page.waitForSelector('#mission-briefing:not([hidden])');assert.equal(await page.evaluate(()=>window.__GAME__.sim.character.id),'akari');await enterCombat(page);
+ await page.goto(base+'/?hangar&model=akari');await page.waitForSelector('#hangar-loading[hidden]',{state:'attached'});await page.locator('#hangar-deploy').click();await page.waitForSelector('#title:not([hidden])');await page.waitForFunction(()=>!!window.__GAME__);assert.equal(await page.evaluate(()=>window.__GAME__.sim.character.id),'akari');await enterCombat(page);
  for(const [id,name]of [['akari','明璃'],['qingluan','青鸾'],['haneul','苍穹'],['astra','星隼'],['snega','霜翼']]){
   if(id!=='akari'){await page.evaluate(()=>window.__GAME__.operations());await page.locator(`#operations button[data-pilot="${id}"]`).click();await page.waitForFunction(id=>window.__GAME__.sim.character.id===id&&document.getElementById('loading').hidden,id);await page.screenshot({path:out+'/'+id+'-title.png'});await enterCombat(page);}
   assert.equal(await page.evaluate(()=>window.__GAME__.world.player.userData.characterId),id);assert.match(await page.locator('#active-pilot').textContent(),new RegExp(name));assert.equal(await page.evaluate(()=>window.__GAME__.sim.health),5);

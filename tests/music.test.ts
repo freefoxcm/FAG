@@ -1,0 +1,4 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readSave,writeSave} from '../src/game/save';
+test('music preferences preserve old scores and round-trip independently of global mute',()=>{const read=(v:unknown)=>readSave({getItem:()=>JSON.stringify(v)});const old=read({version:2,best:500,muted:true});assert.equal(old.best,500);assert.equal(old.musicEnabled,true);assert.equal(old.musicVolume,.55);const quiet=read({...old,musicEnabled:false,musicVolume:.25});let data='';writeSave({setItem:(_key,v)=>{data=v;}},quiet);const saved=readSave({getItem:()=>data});assert.equal(saved.muted,true);assert.equal(saved.musicEnabled,false);assert.equal(saved.musicVolume,.25);assert.equal(read({musicVolume:99}).musicVolume,1);assert.equal(read({musicVolume:-2}).musicVolume,0);assert.equal(read({musicVolume:'loud'}).musicVolume,.55);});
