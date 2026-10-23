@@ -35,7 +35,8 @@ export class CombatFX {
   handle(events:GameEvent[]){
     for(const event of events){const point={x:event.x??0,y:event.y??AIR_HEIGHT,z:event.z??0},color=new T.Color(getCharacter(event.characterId).color).getHex();
       if(event.type==='muzzle')this.add('flash',point,.55,.16,0xffad64);
-      if(event.type==='telegraph')this.add('lock',point,1.4,.65,0xff9e5b,event.targetId);
+      if(event.type==='telegraph'){this.add('lock',point,1.4,.65,0xff9e5b,event.targetId);if(event.variant==='coordinated'&&event.targets?.[0]){this.line(point,event.targets[0],.045,.9,0xff8866);this.add('ring',event.targets[0],2,.9,0xff9e5b);}}
+      if(event.type==='pickup'){const tint=event.pickupKind==='power'?0xffdb89:0x98ffd1;this.add('ring',point,3.5,.4,tint);this.add('flash',point,.6,.15,tint);}
       if(event.type==='missile'){
         this.add('ring',point,4,.55,color);this.add('ring',point,2.7,.38,0xffe3a0);
         for(const target of event.targets??[])this.add('lock',{...target,y:target.y+.3},2.2,1.4,0xffdd86,target.id);

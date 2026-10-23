@@ -4,9 +4,10 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {modelDefinitions} from '../game/enemies';
 export type ModelId=keyof typeof modelDefinitions;
 export class ModelLibrary{
- private loader=new GLTFLoader();private loaded=new Map<string,T.Group>();
+ private loader=new GLTFLoader();private loaded=new Map<string,T.Group>();private pending=new Map<string,Promise<T.Group>>();
  async loadAll(player:ModelId='qingluan'){await Promise.all(([player,'drone','interceptor','heavy','support','boss'] as ModelId[]).map(id=>this.get(id)));}
- async get(id:ModelId,high=false){const key=id+(high?'-high':'');if(!this.loaded.has(key)){const gltf=await this.loader.loadAsync(siteUrl(high?modelDefinitions[id].highUrl:modelDefinitions[id].url));gltf.scene.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});this.loaded.set(key,gltf.scene);}return this.loaded.get(key)!;}
+ async get(id:ModelId,high=false){const key=id+(high?'-high':'');if(this.loaded.has(key))return this.loaded.get(key)!;if(!this.pending.has(key)){const request=this.loader.loadAsync(siteUrl(high?modelDefinitions[id].highUrl:modelDefinitions[id].url)).then(gltf=>{gltf.scene.traverse(o=>{if(o instanceof T.Mesh){o.castShadow=true;o.receiveShadow=true;}});this.loaded.set(key,gltf.scene);this.pending.delete(key);return gltf.scene;}).catch(error=>{this.pending.delete(key);throw error;});this.pending.set(key,request);}return this.pending.get(key)!;}
+ source(id:ModelId){const model=this.loaded.get(id);if(!model)throw Error('Missing model: '+id);return model;}
  clone(id:ModelId){const source=this.loaded.get(id);if(!source)throw Error('Missing model: '+id);return this.cloneScene(source);}
  cloneScene(source:T.Group){const result=source.clone(true);result.traverse(o=>{if(o instanceof T.Mesh){o.material=Array.isArray(o.material)?o.material.map(m=>m.clone()):o.material.clone();}});return result;}
 }

@@ -13,10 +13,10 @@ export async function startModelPreview(){
  const library=new ModelLibrary(),source=await library.get(id,true);const model=library.cloneScene(source);scene.add(model);
  let tris=0;model.traverse(o=>{if(o instanceof T.Mesh)tris+=(o.geometry.index?.count??o.geometry.attributes.position.count)/3;});document.getElementById('preview-stats')!.textContent=Math.round(tris).toLocaleString()+' triangles / UV + PBR';
  const views:Record<string,number[]>={近景:[9,7,-13],俯视:[0,18,.001],侧视:[15,2,0],前视:[0,2,-17]};const buttons=document.getElementById('preview-buttons')!;
- for(const [name,pos]of Object.entries(views)){const button=document.createElement('button');button.textContent=name;button.style.cssText='padding:7px 13px;margin-right:5px;border:1px solid #9bb8a355;background:#365448;color:#dae4d4';button.onclick=()=>{const scale=id==='boss'?2:1;camera.position.set(pos[0]*scale,pos[1]*scale,pos[2]*scale);controls.target.set(0,.2,0);controls.update();};buttons.append(button);}
+ for(const [name,pos]of Object.entries(views)){const button=document.createElement('button');button.textContent=name;button.style.cssText='padding:7px 13px;margin-right:5px;border:1px solid #9bb8a355;background:#365448;color:#dae4d4';button.onclick=()=>{const scale=['boss','prism','canopy'].includes(id)?2:1;camera.position.set(pos[0]*scale,pos[1]*scale,pos[2]*scale);controls.target.set(0,.2,0);controls.update();};buttons.append(button);}
  const lighting=document.createElement('button');lighting.textContent='切换战场光照';lighting.style.cssText='padding:7px 10px;background:#4b5a48;color:white;border:1px solid #9bb8a355';let field=false;lighting.onclick=()=>{field=!field;key.intensity=field?2.4:3;rim.intensity=field?0:1.5;renderer.setClearColor(field?0x899b9e:0x202e34);floor.material.color.setHex(field?0x6a7168:0x263437);};buttons.append(lighting);
  window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
- if(id==='boss'){camera.position.multiplyScalar(2);controls.update();}
+ if(['boss','prism','canopy'].includes(id)){camera.position.multiplyScalar(2);controls.update();}
  Object.assign(window,{__MODEL_PREVIEW__:{model,camera,renderer,controls,definition:modelDefinitions[id],triangles:tris}});
  renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera);});
 }

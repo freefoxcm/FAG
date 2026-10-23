@@ -10,4 +10,5 @@ run(process.execPath,['scripts/prepare-roster-references.mjs']);
 run(process.execPath,['scripts/prepare-pilot-portraits.mjs']);
 if(!process.argv.includes('--roster'))run(blender,['--background','--python-exit-code','1','--python','scripts/author-models.py']);
 run(blender,['--background','--python-exit-code','1','--python','scripts/author-roster.py']);
+if(!process.argv.includes('--roster'))run(blender,['--background','--python-exit-code','1','--python','scripts/author-campaign.py']);
 run(process.execPath,['scripts/optimize-models.mjs',...(process.argv.includes('--roster')?['akari','haneul','astra','snega']:[])]);

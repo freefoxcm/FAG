@@ -152,11 +152,15 @@ def prepare():
         if not o.data.uv_layers:
             uv=o.data.uv_layers.new(name='UVMap')
             for li,l in enumerate(o.data.loops):v=o.data.vertices[l.vertex_index].co;uv.data[li].uv=(v.x*.2+.5,v.y*.2+.5)
-    mats={o.data.materials[0] for o in bpy.context.scene.objects if o.type=='MESH'}
-    for mat in mats:
-        bpy.ops.object.select_all(action='DESELECT');objects=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.data.materials[0]==mat]
+    mats={(o.data.materials[0],o.get('part_id','core')) for o in bpy.context.scene.objects if o.type=='MESH'}
+    for mat,part_id in mats:
+        bpy.ops.object.select_all(action='DESELECT');objects=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.data.materials[0]==mat and o.get('part_id','core')==part_id]
         for o in objects:o.select_set(True)
-        bpy.context.view_layer.objects.active=objects[0];bpy.ops.object.join();objects[0].name=mat.name.split('.')[0]+'-surfaces';bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+        bpy.context.view_layer.objects.active=objects[0];bpy.ops.object.join();objects[0].name=part_id+'-'+mat.name.split('.')[0]+'-surfaces';bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+        if part_id!='core':
+            parent=bpy.data.objects.get(part_id)
+            if parent is None:parent=bpy.data.objects.new(part_id,None);bpy.context.collection.objects.link(parent)
+            objects[0].parent=parent
 def export(kind,info):
     for image in bpy.data.images:
         if image.source=='FILE':image.pack()
